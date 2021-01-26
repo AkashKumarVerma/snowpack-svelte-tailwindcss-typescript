@@ -1,69 +1,88 @@
 <script>
-  import {onMount} from 'svelte';
-  let count = 0;
-  onMount(() => {
-    const interval = setInterval(() => count++, 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  });
+  import './main.css';
+  import { timer } from './timer'
+  import { interval } from 'rxjs'
+  import { map, startWith } from 'rxjs/operators'
+
+  const rxTimer = interval(1000).pipe(
+    startWith(0),
+    map(v => v*2)
+  )
 </script>
 
 <style>
   :global(body) {
-    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-  }
-  .App {
-    text-align: center;
-  }
-  .App code {
-    background: #0002;
-    padding: 4px 8px;
-    border-radius: 4px;
-  }
-  .App p {
-    margin: 0.4rem;
-  }
-
-  .App-header {
-    background-color: #f9f6f6;
-    color: #333;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
+  }
+  .app {
+    display: grid;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
+    width: 100%;
   }
-  .App-link {
-    color: #ff3e00;
-  }
-  .App-logo {
-    height: 36vmin;
-    pointer-events: none;
-    margin-bottom: 3rem;
-    animation: App-logo-pulse infinite 1.6s ease-in-out alternate;
-  }
-  @keyframes App-logo-pulse {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.06);
-    }
+  .box {
+    margin: 0 auto;
   }
 </style>
 
-<div class="App">
-  <header class="App-header">
-    <img src="/logo.svg" class="App-logo" alt="logo" />
-    <p>Edit <code>src/App.svelte</code> and save to reload.</p>
-    <p>Page has been open for <code>{count}</code> seconds.</p>
-    <p>
-      <a class="App-link" href="https://svelte.dev" target="_blank" rel="noopener noreferrer">
-        Learn Svelte
-      </a>
-    </p>
-  </header>
+<div class="app">
+  <div class="flex">
+    <div class="flex-none w-48 relative">
+      <img src="https://tailwindcss.com/_next/static/media/classic-utility-jacket.0f108046e151c8576017eaf383406fe6.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+    </div>
+    <form class="flex-auto p-6">
+      <div class="flex flex-wrap">
+        <h1 class="flex-auto text-xl font-semibold">
+          Classic Utility Jacket
+        </h1>
+        <div class="text-xl font-semibold text-gray-500">
+          $110.00
+        </div>
+        <div class="w-full flex-none text-sm font-medium text-gray-500 mt-2">
+          In stock
+        </div>
+      </div>
+      <div class="flex items-baseline mt-4 mb-6">
+        <div class="space-x-2 flex">
+          <label>
+            <input class="w-9 h-9 flex items-center justify-center bg-gray-100 rounded-lg" name="size" type="radio" value="xs" checked>
+            XS
+          </label>
+          <label>
+            <input class="w-9 h-9 flex items-center justify-center" name="size" type="radio" value="s">
+            S
+          </label>
+          <label>
+            <input class="w-9 h-9 flex items-center justify-center" name="size" type="radio" value="m">
+            M
+          </label>
+          <label>
+            <input class="w-9 h-9 flex items-center justify-center" name="size" type="radio" value="l">
+            L
+          </label>
+          <label>
+            <input class="w-9 h-9 flex items-center justify-center" name="size" type="radio" value="xl">
+            XL
+          </label>
+        </div>
+        <div class="ml-auto text-sm text-gray-500 underline">Size Guide</div>
+      </div>
+      <div class="flex space-x-3 mb-4 text-sm font-medium">
+        <div class="flex-auto flex space-x-3">
+          <button class="w-1/2 flex items-center justify-center rounded-md bg-black text-white" type="submit">Buy now</button>
+          <button class="w-1/2 flex items-center justify-center rounded-md border border-gray-300" type="button">Add to bag</button>
+        </div>
+        <button class="flex-none flex items-center justify-center w-9 h-9 rounded-md text-gray-400 border border-gray-300" type="button" aria-label="like">
+          <svg width="20" height="20" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+          </svg>
+        </button>
+      </div>
+      <p class="text-sm text-gray-500">
+        Free shipping on all continental US orders.
+      </p>
+    </form>
+  </div>
 </div>

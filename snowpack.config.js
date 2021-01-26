@@ -5,9 +5,12 @@ module.exports = {
     src: {url: '/dist'},
   },
   plugins: [
+    '@snowpack/plugin-postcss',
+    "@snowpack/plugin-babel",
     '@snowpack/plugin-svelte',
     '@snowpack/plugin-dotenv',
   ],
+  extends: "@snowpack/app-scripts-svelte",
   routes: [
     /* Example: Enable an SPA Fallback in development: */
     // {"match": "routes", "src": ".*", "dest": "/index.html"},
